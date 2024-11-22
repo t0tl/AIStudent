@@ -1,78 +1,133 @@
-import duckdb
-# from openai import OpenAI
+# /// script
+# dependencies = [
+#   "duckdb==1.1.3",
+#   "pandas==2.2.3",
+#   "numpy==2.1.3"
+# ]
+# ///
+import uuid
 
-# Create a database called BingeBlitz.db
-con = duckdb.connect('BingeBlitz.db')
-# 1. `streaming_data` - Contains information about the streaming sessions, including `title_id`, `bandwidth`, `time_interval`, `region`, `resolution`, and `device`.
+import duckdb
+import pandas as pd
+import numpy as np
+
+# 1. `streaming_data` - Contains information about the streaming sessions, including `title_id`, `bandwidth`, `time_measured`, `region`, `resolution`, and `device`.
 
 # 2. `title_data` - Contains details about the titles, including `title_id`, `title_name`, `genre`, and `release_year`.
 
-# 3. `viewership_data` - Contains data about the viewership of titles, including `title_id`, `viewership`, and `time_interval`.
+# 3. `viewership_data` - Contains data about the viewership of titles, including `title_id`, `viewership`, and `time_day`.
+
+
+# Create a database called BingeBlitz.db
+con = duckdb.connect('BingeBlitz.db')
+
+# Add noise to bandwidth amounts
+BANDWIDTH_AMOUNTS = [100, 150, 200, 1000]
+REGIONS = ['US', 'UK', "SE", "JP"]
+RESOLUTIONS = ['720p', '1080p', '4K']
+DEVICES = ['Samsung TV', 'Apple TV', 'Roku', 'Fire TV', 'Chromecast', 'Xbox', 'Playstation', 'Windows', 'Mac', 'iPhone', 'Android']
+# Add offset to the time measured
+TIME_MEASURED = []
+for i in range(24):
+    for j in range(60):
+        TIME_MEASURED.append(f"2021-01-01 {i:02d}:{j:02d}:{np.random.randint(0, 59):02d}")
+
+# Read movies.csv to get title name, genre and release year
+movie_df = con.sql(
+    """
+    SELECT Title, Year, Genre FROM read_csv_auto('movies.csv');
+    """
+).to_df()
+
+movie_df.columns = ['title', 'year', 'genre']
+
+# Remove the first genre to get some null values
+movie_df['genre'] = movie_df['genre'].str.split(", ").apply(lambda x: x[1:] if len(x) > 1 else None)
+movie_df['title_id'] = [uuid.uuid4() for _ in range(len(movie_df))]
+title_id_df = movie_df['title_id'].copy()
+
+# con.sql("DROP TABLE IF EXISTS title_data;")
 
 con.sql(
     """
-    CREATE TABLE streaming_data (
-        title_id VARCHAR,
-        bandwidth INT,
-        time_interval TIMESTAMP,
-        region VARCHAR,
-        resolution VARCHAR,
-        device VARCHAR
+    CREATE TABLE title_data AS (
+        SELECT title, year, genre, title_id FROM movie_df
+    )
+    """
+)
+print("Created title_data table.")
+
+
+TIME_DAY = []
+for j in range(1, 31):
+    for k in range(24):
+        TIME_DAY.append(f"2021-01-{j:02d} {k:02d}:00:00")
+
+viewership_df = pd.DataFrame({
+    'title_id': np.random.choice(title_id_df, 100),
+    'viewership': np.random.randint(100, 100_000, 100),
+    'time_day': TIME_DAY[0]
+})
+
+for time_day in TIME_DAY[1:]:
+    viewership_df = pd.concat([
+        viewership_df,
+        pd.DataFrame({
+            'title_id': np.random.choice(title_id_df, 100),
+            'viewership': np.random.randint(100, 100_000, 100),
+            'time_day': np.array(time_day).repeat(100)
+        })
+    ])
+
+# con.sql("DROP TABLE IF EXISTS viewership_data;")
+
+con.sql(
+    """
+    CREATE TABLE viewership_data AS (
+        SELECT * FROM viewership_df
     );
     """
 )
 
+print("Created viewership table.")
+
+del movie_df
+del viewership_df
+
+N_ROWS_STREAMING = 10_000_000
+
+streaming_data_df = pd.DataFrame({
+    'title_id': np.random.choice(title_id_df, N_ROWS_STREAMING),
+    # use float16 to save space
+    'bandwidth': np.random.normal(
+        np.random.choice(BANDWIDTH_AMOUNTS, N_ROWS_STREAMING),
+        25
+    ).astype('float16'),
+    'time_measured': np.random.choice(TIME_MEASURED, N_ROWS_STREAMING),
+    'region': np.random.choice(REGIONS, N_ROWS_STREAMING),
+    'resolution': np.random.choice(RESOLUTIONS, N_ROWS_STREAMING),
+    'device': np.random.choice(DEVICES, N_ROWS_STREAMING)
+})
+
+# con.sql("DROP TABLE IF EXISTS streaming_data;")
+
 con.sql(
     """
-    CREATE TABLE title_data (
-        title_id VARCHAR,
-        title_name VARCHAR,
-        genre VARCHAR,
-        release_year INT
+    CREATE TABLE streaming_data AS (
+        SELECT
+            title_id,
+            bandwidth,
+            time_measured::TIMESTAMP AS time_measured,
+            region,
+            resolution,
+            device
+        FROM streaming_data_df
     );
     """
 )
 
-con.sql(
-    """
-    CREATE TABLE viewership_data (
-        title_id VARCHAR,
-        viewership INT,
-        time_interval TIMESTAMP
-    );
-    """
-)
+print("Created streaming_data table.")
 
-### Populate tables
-con.sql(
-    """
-    INSERT INTO streaming_data VALUES
-    ('tt0001', 100, '2021-01-01 00:00:00', 'US', '720p', 'Mobile'),
-    ('tt0002', 200, '2021-01-01 00:00:00', 'US', '1080p', 'Desktop'),
-    ('tt0003', 150, '2021-01-01 00:00:00', 'US', '720p', 'Tablet'),
-    ('tt0001', 100, '2021-01-01 00:15:00', 'US', '720p', 'Mobile'),
-    ('tt0002', 200, '2021-01-01 00:15:00', 'US', '1080p', 'Desktop'),
-    ('tt0003', 150, '2021-01-01 00:15:00', 'US', '720p', 'Tablet');
-    """
-)
+del streaming_data_df
 
-con.sql(
-    """
-    INSERT INTO title_data VALUES
-    ('tt0001', 'Title 1', 'Drama', 2020),
-    ('tt0002', 'Title 2', 'Comedy', 2019),
-    ('tt0003', 'Title 3', 'Action', 2018);
-    """
-)
-
-con.sql(
-    """
-    INSERT INTO viewership_data VALUES
-    ('tt0001', 1000, '2021-01-01 00:00:00'),
-    ('tt0002', 2000, '2021-01-01 00:00:00'),
-    ('tt0003', 1500, '2021-01-01 00:00:00'),
-    ('tt0001', 1000, '2021-01-01 00:15:00'),
-    ('tt0002', 2000, '2021-01-01 00:15:00'),
-    ('tt0003', 1500, '2021-01-01 00:15:00');
-    """
-)
+con.close()

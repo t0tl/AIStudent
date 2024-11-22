@@ -8,11 +8,11 @@ At Netflix competitor, BingeBlitz, a sudden influx of new subscribers has caused
 
 You have access to a data warehouse with aggregated data called `BingeBlitz.db` with the following tables:
 
-1. `streaming_data` - Contains information about the streaming sessions, including `title_id`, `bandwidth`, `time_interval`, `region`, `resolution`, and `device`.
+1. `streaming_data` - Contains information about the streaming sessions, including `title_id`, `bandwidth`, `time_measured`, `region`, `resolution`, and `device`.
 
 2. `title_data` - Contains details about the titles, including `title_id`, `title_name`, `genre`, and `release_year`.
 
-3. `viewership_data` - Contains data about the viewership of titles, including `title_id`, `viewership`, and `time_interval`.
+3. `viewership_data` - Contains data about the viewership of titles, including `title_id`, `viewership`, and `time_day`.
 
 ## Task 1: Aggregations
 Which titles are consuming the most bandwidth?
@@ -34,7 +34,7 @@ What are the peak usage times across different regions?
 ```sql
 SELECT 
     region,
-    HOUR(time_interval) AS peak_hour,
+    HOUR(time_measured) AS peak_hour,
     COUNT(*) AS peak_usage_count
 FROM streaming_data
 GROUP BY region, peak_hour
@@ -61,7 +61,7 @@ Are there specific genres or types of content that spike during particular hours
 SELECT 
     sd.title_id,
     genre,
-    HOUR(time_interval) AS peak_hour,
+    HOUR(time_measured) AS peak_hour,
     COUNT(*) AS peak_usage_count
 FROM streaming_data AS sd
 LEFT JOIN title_data AS td
@@ -78,9 +78,9 @@ Which titles have the fastest growth in viewership per day in the last week?
 SELECT 
     title_id,
     viewership,
-    viewership - LAG(viewership) OVER (PARTITION BY title_id ORDER BY time_interval) AS viewership_growth
+    viewership - LAG(viewership) OVER (PARTITION BY title_id ORDER BY time_day) AS viewership_growth
 FROM viewership_data
-WHERE time_interval BETWEEN today - 7 AND today;
+WHERE time_day BETWEEN today - 7 AND today;
 ORDER BY viewership_growth DESC
 LIMIT 10;
 ```
