@@ -322,7 +322,9 @@ class Post:
 posts = []
 # Decode the JSON response into a Post instance
 for ...
-    response = requests.get("https://jsonplaceholder.typicode.com/posts/1")
+    # URL: https://jsonplaceholder.typicode.com/posts/{post_id}
+    # post_id is a number from 1 to max number of posts
+    response = requests.get(...)
     post_data = json.loads(response.content)
 
     post = Post(userId=post_data["userId"], ...)
