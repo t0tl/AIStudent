@@ -2,7 +2,8 @@
 # dependencies = [
 #   "duckdb==1.1.3",
 #   "pandas==2.2.3",
-#   "numpy==2.1.3"
+#   "numpy==2.1.3",
+#   "tqdm==4.67.1"
 # ]
 # ///
 import uuid
@@ -10,6 +11,7 @@ import uuid
 import duckdb
 import pandas as pd
 import numpy as np
+from tqdm import tqdm
 
 # 1. `streaming_data` - Contains information about the streaming sessions, including `title_id`, `bandwidth`, `time_measured`, `region`, `resolution`, and `device`.
 
@@ -46,7 +48,7 @@ movie_df['genre'] = movie_df['genre'].str.split(", ").apply(lambda x: x[1:] if l
 movie_df['title_id'] = [uuid.uuid4() for _ in range(len(movie_df))]
 title_id_df = movie_df['title_id'].copy()
 
-# con.sql("DROP TABLE IF EXISTS title_data;")
+con.sql("DROP TABLE IF EXISTS title_data;")
 
 con.sql(
     """
@@ -56,6 +58,7 @@ con.sql(
     """
 )
 print("Created title_data table.")
+print("Creating viewership table...")
 
 
 TIME_DAY = []
@@ -69,17 +72,7 @@ viewership_df = pd.DataFrame({
     'time_day': TIME_DAY[0]
 })
 
-for time_day in TIME_DAY[1:]:
-    viewership_df = pd.concat([
-        viewership_df,
-        pd.DataFrame({
-            'title_id': np.random.choice(title_id_df, 100),
-            'viewership': np.random.randint(100, 100_000, 100),
-            'time_day': np.array(time_day).repeat(100)
-        })
-    ])
-
-# con.sql("DROP TABLE IF EXISTS viewership_data;")
+con.sql("DROP TABLE IF EXISTS viewership_data;")
 
 con.sql(
     """
@@ -89,27 +82,42 @@ con.sql(
     """
 )
 
+for time_day in tqdm(TIME_DAY[1:]):
+    viewership_df = pd.DataFrame({
+            'title_id': np.random.choice(title_id_df, 100),
+            'viewership': np.random.randint(100, 100_000, 100),
+            'time_day': np.array(time_day).repeat(100)
+        })
+    con.sql(
+        """
+        INSERT INTO viewership_data
+        SELECT * FROM viewership_df
+        """
+    )
+
 print("Created viewership table.")
+print("Creating streaming_data table...")
 
-del movie_df
-del viewership_df
+N_ROWS_STREAMING = 50_000_000
 
-N_ROWS_STREAMING = 10_000_000
+N_BATCHES = 1000
+
+N_ROWS_BATCH = N_ROWS_STREAMING // N_BATCHES
 
 streaming_data_df = pd.DataFrame({
-    'title_id': np.random.choice(title_id_df, N_ROWS_STREAMING),
-    # use float16 to save space
-    'bandwidth': np.random.normal(
-        np.random.choice(BANDWIDTH_AMOUNTS, N_ROWS_STREAMING),
-        25
-    ).astype('float16'),
-    'time_measured': np.random.choice(TIME_MEASURED, N_ROWS_STREAMING),
-    'region': np.random.choice(REGIONS, N_ROWS_STREAMING),
-    'resolution': np.random.choice(RESOLUTIONS, N_ROWS_STREAMING),
-    'device': np.random.choice(DEVICES, N_ROWS_STREAMING)
-})
+        'title_id': np.random.choice(title_id_df, N_ROWS_BATCH),
+        # use float16 to save space
+        'bandwidth': np.random.normal(
+            np.random.choice(BANDWIDTH_AMOUNTS, N_ROWS_BATCH),
+            25
+        ).astype('float16'),
+        'time_measured': np.random.choice(TIME_MEASURED, N_ROWS_BATCH),
+        'region': np.random.choice(REGIONS, N_ROWS_BATCH),
+        'resolution': np.random.choice(RESOLUTIONS, N_ROWS_BATCH),
+        'device': np.random.choice(DEVICES, N_ROWS_BATCH)
+    })
 
-# con.sql("DROP TABLE IF EXISTS streaming_data;")
+con.sql("DROP TABLE IF EXISTS streaming_data;")
 
 con.sql(
     """
@@ -126,8 +134,33 @@ con.sql(
     """
 )
 
-print("Created streaming_data table.")
+for batch in tqdm(range(N_BATCHES-1)):
+    streaming_data_df = pd.DataFrame({
+        'title_id': np.random.choice(title_id_df, N_ROWS_BATCH),
+        # use float16 to save space
+        'bandwidth': np.random.normal(
+            np.random.choice(BANDWIDTH_AMOUNTS, N_ROWS_BATCH),
+            25
+        ).astype('float16'),
+        'time_measured': np.random.choice(TIME_MEASURED, N_ROWS_BATCH),
+        'region': np.random.choice(REGIONS, N_ROWS_BATCH),
+        'resolution': np.random.choice(RESOLUTIONS, N_ROWS_BATCH),
+        'device': np.random.choice(DEVICES, N_ROWS_BATCH)
+    })
+    con.sql(
+        """
+        INSERT INTO streaming_data
+        SELECT
+            title_id,
+            bandwidth,
+            time_measured::TIMESTAMP AS time_measured,
+            region,
+            resolution,
+            device
+        FROM streaming_data_df
+        """
+    )
 
-del streaming_data_df
+print("Created streaming_data table.")
 
 con.close()

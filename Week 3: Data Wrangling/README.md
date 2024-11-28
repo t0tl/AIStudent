@@ -6,7 +6,7 @@ Unless stated otherwise, you can choose to work with one of the following librar
 ## Story:
 At Netflix competitor, BingeBlitz, a sudden influx of new subscribers has caused a massive increase in demand, leading to noticeable latency and occasional buffering issues during peak streaming hours. The backend engineer, Alex, is tasked with optimizing the service to handle the load more efficiently. To make informed decisions, Alex seeks insights from you.
 
-You have access to a data warehouse with aggregated data called `BingeBlitz.db` with the following tables:
+You have access to a data warehouse with 50+ M rows of data called `BingeBlitz.db`. Note, you need to create `BingeBlitz.db` by running `uv run synthetic_data.py`. Note,this requires `uv` to be installed. This may take a couple of minutes. `BingeBlitz.db` has the following tables:
 
 1. `streaming_data` - Contains information about the streaming sessions, including `title_id`, `bandwidth`, `time_measured`, `region`, `resolution`, and `device`.
 
