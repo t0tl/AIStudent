@@ -1,3 +1,19 @@
+# Installing Required Packages with `uv`
+For this week we will work with external packages like `numpy`, `scipy`, `pandas`, `matplotlib`, `statsmodels` and `sklearn`. To do this, we recommend you to use `uv` for managing your virtual environment. You can install it by running `pip install uv`. Thereafter, you can just do `uv run <name_of_file.py>` to run your code if there is an inline dependency like
+
+```python
+# /// script
+# dependencies = [
+#   "numpy==2.1.3",
+# ]
+# ///
+import numpy as np
+
+print(np.__version__)
+```
+
+Uv is an alternative to `pip` and `venv`. It allows for inline dependencies, faster installs, and better management of virtual environments using lockfiles. You can find more information about `uv` [here](https://docs.astral.sh/uv/).
+
 # Exercise 1: Analyzing (Descriptive Statistics + Data Visualization)
 
 ## Contents:
