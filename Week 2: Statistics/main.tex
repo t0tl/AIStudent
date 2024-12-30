@@ -1,0 +1,268 @@
+\documentclass{beamer}
+\usepackage{amsmath}
+\usepackage{graphicx}
+\usepackage{hyperref}
+
+\title{Lecture: Data Analysis and Machine Learning Theory}
+\author{KTH AI Student}
+\date{\today}
+
+\begin{document}
+
+\frame{\titlepage}
+
+\section{Introduction to \texttt{uv}}
+\begin{frame}{Installing Required Packages with \texttt{uv}}
+\begin{itemize}
+    \item \texttt{uv}: Modern tool for managing virtual environments.
+    \item Features:
+    \begin{itemize}
+        \item Inline dependency management: Specify dependencies directly in your code for better reproducibility.
+        \item Faster installations: Uses efficient caching to minimize installation time.
+        \item Lockfiles: Ensures consistent environments across systems by locking dependency versions.
+    \end{itemize}
+    \item Installation: \texttt{pip install uv}
+    \item Usage: \texttt{uv run <name\_of\_file.py>}, automatically handles dependencies.
+\end{itemize}
+\end{frame}
+
+\section{Descriptive Statistics and Data Visualization}
+
+\begin{frame}{Example: Student Test Scores}
+    \begin{itemize}
+        \item \textbf{Dataset:} Contains scores of students.
+        \item \textbf{Goals:}
+        \begin{itemize}
+            \item Compute key descriptive statistics to summarize performance.
+            \item Visualize score distributions to identify trends or outliers.
+            \item Provide actionable insights to improve teaching methods.
+        \end{itemize}
+    \end{itemize}
+    \end{frame}
+
+\begin{frame}{Key Concepts}
+\textbf{Descriptive Statistics:} Summarize and describe the main features of a dataset.
+\begin{itemize}
+    \item \textbf{Mean}: The average value of a dataset.
+    $$ \bar{x} = \frac{1}{n} \sum_{i=1}^{n} x_i $$
+    \item \textbf{Median}: The middle value when data is sorted.
+    $$ x_{\text{median}} = \begin{cases} x_{(n+1)/2} & \text{if } n \text{ is odd} \\ \frac{1}{2} (x_{n/2} + x_{n/2+1}) & \text{if } n \text{ is even} \end{cases} $$
+    \item \textbf{Mode}: The most frequently occurring value.
+    $$ x_{\text{mode}} = \text{value with highest frequency} $$
+\end{itemize}
+\end{frame}
+
+\begin{frame}{Key Concepts}
+\begin{itemize}
+    \item \textbf{Variance}: Measures the spread of data points from the mean.
+    $$ \sigma^2 = \frac{1}{n} \sum_{i=1}^{n} (x_i - \bar{x})^2 $$
+    \item \textbf{Standard Deviation}: Square root of variance, represents data dispersion.
+    $$ \text{SD} = \sqrt{\sigma^2} $$
+    \item \textbf{Range}: Difference between the maximum and minimum values.
+    $$ \text{Range} = \max(x) - \min(x) $$
+\end{itemize}
+\end{frame}
+
+\begin{frame}{Key Concepts}
+\begin{itemize}
+    \item \textbf{Skewness}: Measures asymmetry of data distribution.
+    $$ \text{Skewness} = \frac{\frac{1}{n} \sum_{i=1}^{n} (x_i - \bar{x})^3}{\left(\frac{1}{n} \sum_{i=1}^{n} (x_i - \bar{x})^2\right)^{3/2}} $$
+    \item \textbf{Kurtosis}: Measures the \textit{tailedness} of the data distribution.
+    $$ \text{Kurtosis} = \frac{\frac{1}{n} \sum_{i=1}^{n} (x_i - \bar{x})^4}{\left(\frac{1}{n} \sum_{i=1}^{n} (x_i - \bar{x})^2\right)^2} $$
+\end{itemize}
+\end{frame}
+
+\begin{frame}{Key Concepts}
+\textbf{Data Visualization:} Graphical representation of data.
+\begin{itemize}
+    \item \textbf{Histograms}: Show frequency distribution of data.
+        \begin{figure}
+            \centering
+            \includegraphics[width=0.5\textwidth]{histogram.png}
+        \end{figure}
+    \item \textbf{Box Plots}: Visualize data spread and identify outliers.
+        \begin{figure}
+            \centering
+            \includegraphics[width=0.5\textwidth]{box-plot.png}
+        \end{figure}
+    \end{itemize}
+\end{frame}
+
+\begin{frame}{Key Concepts}
+\begin{itemize}
+    \item \textbf{Scatter Plots}: Display relationships between two variables.
+    \begin{figure}
+        \centering
+        \includegraphics[width=0.5\textwidth]{scatter-plot.png}
+    \end{figure}
+    \item \textbf{Bar Charts}: Compare categorical data.
+    \begin{figure}
+        \centering
+        \includegraphics[width=0.3\textwidth]{bar-chart.png}
+    \end{figure}
+\end{itemize}
+\end{frame}
+
+
+\section{Probability Theory and Simulation}
+
+
+\begin{frame}{Example: Simulation Tasks}
+    \begin{itemize}
+        \item Simulate 1000 coin tosses to calculate the probability of heads and compare with theoretical value.
+        \item Simulate 1000 dice rolls to calculate:
+        \begin{itemize}
+            \item Probability of rolling a prime number.
+            \item Conditional probability of a prime given the number is odd.
+        \end{itemize}
+        \item Use Monte Carlo simulation to estimate $\pi$.
+    \end{itemize}
+    \end{frame}
+
+
+\begin{frame}{Key Concepts: Probability}
+\begin{itemize}
+    \item \textbf{Probability:} Study of the likelihood of events.
+    \begin{itemize}
+        \item \textbf{Theoretical Probability:} Based on known outcomes (e.g., coin toss).
+        $$ P(A) = \frac{\text{Number of favorable outcomes}}{\text{Total number of outcomes}} $$
+        \item \textbf{Simulated Probability:} Estimated by running experiments or simulations.
+        \item \textbf{Bayes' Theorem:} Describes conditional probability, updates beliefs based on evidence.
+        $$ P(A|B) = \frac{P(B|A) \cdot P(A)}{P(B)} $$
+    \end{itemize}
+\end{itemize}
+\end{frame}
+
+\begin{frame}{Key Concepts: Probability Distributions}
+\begin{itemize}
+    \item \textbf{Probability Distributions:} Represent how probabilities are distributed over values.
+    \begin{itemize}
+        \item \textbf{Uniform Distribution:} All outcomes are equally likely.
+        $$ P(x) = \frac{1}{n} \quad \text{for } x \in \{1, 2, \ldots, n\} $$
+        \item \textbf{Binomial Distribution:} Number of successes in fixed trials.
+        $$ P(X = k) = \binom{n}{k} p^k (1-p)^{n-k} $$
+        \item \textbf{Normal Distribution:} Bell-shaped curve, common in natural data.
+        $$ f(x) = \frac{1}{\sqrt{2\pi\sigma^2}} e^{-\frac{(x-\mu)^2}{2\sigma^2}} $$
+    \end{itemize}
+\end{itemize}
+\end{frame}
+
+\begin{frame}{Key Concepts: Monte Carlo Simulation}
+\begin{itemize}
+    \item \textbf{Monte Carlo Simulation:} Uses random sampling to estimate mathematical results.
+    \begin{itemize}
+        \item Example: Estimate $\pi$ by generating random points in a square and calculating the ratio inside a quarter circle.
+        $$ \pi \approx 4 \times \frac{\text{Number of points inside circle}}{\text{Total number of points}} $$
+    \end{itemize}
+\end{itemize}
+\end{frame}
+
+\section{Correlation and Regression Analysis}
+
+\begin{frame}{Key Concepts: Correlation}
+\begin{itemize}
+    \item \textbf{Correlation:} Measures linear relationship strength and direction.
+    \begin{itemize}
+        \item Coefficient values range from -1 (perfect negative) to 1 (perfect positive).
+        \item Value near 0 implies weak or no linear relationship.
+    \end{itemize}
+\end{itemize}
+\end{frame}
+
+\begin{frame}{Key Concepts: Regression Analysis}
+\begin{itemize}
+    \item \textbf{Regression Analysis:} Models the relationship between variables.
+    \begin{itemize}
+        \item \textbf{Simple Linear Regression:} $y = \beta_0 + \beta_1 x + \epsilon$
+        \item Coefficients ($\beta_0$, $\beta_1$) are estimated to minimize error ($\epsilon$).
+        \item \textbf{Evaluation Metrics:} Mean Squared Error (MSE), measures average squared differences between actual and predicted values.
+    \end{itemize}
+\end{itemize}
+\end{frame}
+
+\begin{frame}{Example: Car Prices and Mileage}
+\begin{itemize}
+    \item \textbf{Dataset:} Car prices and mileage.
+    \item \textbf{Goals:}
+    \begin{itemize}
+        \item Calculate correlation to determine strength of relationship.
+        \item Build a regression model to predict car prices based on mileage.
+        \item Visualize data points and regression line to assess model fit.
+    \end{itemize}
+\end{itemize}
+\end{frame}
+
+\section{A/B Testing and Hypothesis Testing}
+\begin{frame}{Key Concepts}
+\begin{itemize}
+    \item \textbf{Hypothesis Testing:} Framework to evaluate evidence against a null hypothesis ($H_0$).
+    \begin{itemize}
+        \item \textbf{Null Hypothesis ($H_0$):} Assumes no effect or difference.
+        \item \textbf{Alternative Hypothesis ($H_a$):} Suggests a significant effect or difference.
+    \end{itemize}
+    \item \textbf{t-Test:} Compares means of two groups to assess differences.
+    \begin{itemize}
+        \item \textbf{t-statistic:} Measures difference relative to data variability.
+        \item \textbf{p-value:} Probability of observing results as extreme as current data under $H_0$.
+    \end{itemize}
+\end{itemize}
+\end{frame}
+
+\begin{frame}{Example: Website Redesign}
+\begin{itemize}
+    \item \textbf{Dataset:} Engagement metrics for old and new website designs.
+    \item \textbf{Goals:}
+    \begin{itemize}
+        \item Perform t-test to compare user engagement.
+        \item Interpret p-value to determine statistical significance.
+        \item Provide actionable recommendations based on findings.
+    \end{itemize}
+\end{itemize}
+\end{frame}
+
+\section{Linear Regression and Gauss-Markov Assumptions}
+\begin{frame}{Key Concepts}
+\begin{itemize}
+    \item \textbf{Linear Regression:} Predicts a dependent variable from independent variable(s).
+    \item \textbf{Gauss-Markov Assumptions:}
+    \begin{itemize}
+        \item \textbf{Linearity:} Relationship between predictors and outcome is linear.
+        \item \textbf{Independence:} Residuals (errors) are independent of each other.
+        \item \textbf{Homoscedasticity:} Residuals have constant variance.
+        \item \textbf{No Multicollinearity:} Independent variables are not highly correlated.
+        \item \textbf{Normality of Errors:} Errors are normally distributed (optional).
+    \end{itemize}
+    \item \textbf{Implications of Violations:} Leads to biased estimates, inefficient predictions, or unreliable inference.
+\end{itemize}
+\end{frame}
+
+\begin{frame}{Example: Predicting Housing Prices}
+\begin{itemize}
+    \item \textbf{Dataset:} House prices based on square footage.
+    \item \textbf{Goals:}
+    \begin{itemize}
+        \item Build regression model to predict house prices.
+        \item Evaluate Gauss-Markov assumptions (e.g., residual analysis).
+        \item Interpret coefficients and assess model validity.
+    \end{itemize}
+\end{itemize}
+\end{frame}
+
+\section{Conclusion}
+\begin{frame}{Summary}
+\begin{itemize}
+    \item Reviewed key concepts in data analysis and machine learning:
+    \begin{itemize}
+        \item Descriptive statistics: Summarized data distributions.
+        \item Probability: Explored theoretical and simulated outcomes.
+        \item Regression: Built predictive models and evaluated their performance.
+        \item Hypothesis testing: Assessed differences using statistical tests.
+        \item Linear regression assumptions: Ensured model reliability.
+    \end{itemize}
+    \item Emphasized critical thinking and interpretation of results.
+\end{itemize}
+\end{frame}
+
+\frame{\titlepage}
+
+\end{document}
