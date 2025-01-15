@@ -156,112 +156,121 @@
     \end{itemize}
 \end{itemize}
 \end{frame}
-
 \section{Correlation and Regression Analysis}
 
 \begin{frame}{Key Concepts: Correlation}
 \begin{itemize}
-    \item \textbf{Correlation:} Measures linear relationship strength and direction.
+    \item \textbf{Correlation:} Measures the strength and direction of the linear relationship between two variables.
     \begin{itemize}
-        \item Coefficient values range from -1 (perfect negative) to 1 (perfect positive).
-        \item Value near 0 implies weak or no linear relationship.
+        \item \textbf{Range:} Values range from $-1$ to $1$.
+        \item \textbf{Interpretation:}
+        \begin{itemize}
+            \item $1$: Perfect positive correlation.
+            \item $-1$: Perfect negative correlation.
+            \item $0$: No linear correlation.
+        \end{itemize}
     \end{itemize}
 \end{itemize}
 \end{frame}
 
 \begin{frame}{Key Concepts: Regression Analysis}
 \begin{itemize}
-    \item \textbf{Regression Analysis:} Models the relationship between variables.
+    \item \textbf{Regression Analysis:} Models the relationship between a dependent variable and one or more independent variables.
     \begin{itemize}
         \item \textbf{Simple Linear Regression:} $y = \beta_0 + \beta_1 x + \epsilon$
-        \item Coefficients ($\beta_0$, $\beta_1$) are estimated to minimize error ($\epsilon$).
-        \item \textbf{Evaluation Metrics:} Mean Squared Error (MSE), measures average squared differences between actual and predicted values.
+        \item \textbf{Goals:}
+        \begin{itemize}
+            \item Estimate the coefficients ($\beta_0$, $\beta_1$).
+            \item Minimize prediction error ($\epsilon$).
+        \end{itemize}
+        \item \textbf{Evaluation Metrics:} Assess model fit using metrics such as Mean Squared Error (MSE).
     \end{itemize}
 \end{itemize}
 \end{frame}
 
 \begin{frame}{Example: Car Prices and Mileage}
 \begin{itemize}
-    \item \textbf{Dataset:} Car prices and mileage.
-    \item \textbf{Goals:}
+    \item \textbf{Dataset:} Contains car prices and mileage.
+    \item \textbf{Tasks:}
     \begin{itemize}
-        \item Calculate correlation to determine strength of relationship.
-        \item Build a regression model to predict car prices based on mileage.
-        \item Visualize data points and regression line to assess model fit.
+        \item Compute the correlation coefficient to assess the strength and direction of the relationship.
+        \item Build a simple linear regression model to predict prices based on mileage.
+        \item Visualize the data and regression line to interpret the results.
     \end{itemize}
 \end{itemize}
 \end{frame}
 
 \section{A/B Testing and Hypothesis Testing}
-\begin{frame}{Key Concepts}
+
+\begin{frame}{Key Concepts: Hypothesis Testing}
 \begin{itemize}
-    \item \textbf{Hypothesis Testing:} Framework to evaluate evidence against a null hypothesis ($H_0$).
+    \item \textbf{Hypothesis Testing:} Framework to evaluate whether observed data provides sufficient evidence to reject a null hypothesis ($H_0$).
     \begin{itemize}
         \item \textbf{Null Hypothesis ($H_0$):} Assumes no effect or difference.
         \item \textbf{Alternative Hypothesis ($H_a$):} Suggests a significant effect or difference.
     \end{itemize}
-    \item \textbf{t-Test:} Compares means of two groups to assess differences.
+    \item \textbf{t-Test:} Compares means of two groups.
     \begin{itemize}
-        \item \textbf{t-statistic:} Measures difference relative to data variability.
-        \item \textbf{p-value:} Probability of observing results as extreme as current data under $H_0$.
+        \item \textbf{t-statistic:} Quantifies the difference relative to variability.
+        \item \textbf{p-value:} Probability of observing results as extreme as the data, assuming $H_0$ is true.
     \end{itemize}
+    \item \textbf{Significance Level:} Common threshold $\alpha = 0.05$.
 \end{itemize}
 \end{frame}
 
-\begin{frame}{Example: Website Redesign}
+\begin{frame}{Example: Website Redesign A/B Test}
 \begin{itemize}
-    \item \textbf{Dataset:} Engagement metrics for old and new website designs.
-    \item \textbf{Goals:}
+    \item \textbf{Dataset:} User engagement metrics for old and new designs.
+    \item \textbf{Tasks:}
     \begin{itemize}
-        \item Perform t-test to compare user engagement.
-        \item Interpret p-value to determine statistical significance.
-        \item Provide actionable recommendations based on findings.
+        \item Perform a t-test to compare engagement levels.
+        \item Calculate and interpret the p-value.
+        \item Determine whether the new design significantly improves engagement.
     \end{itemize}
 \end{itemize}
 \end{frame}
 
 \section{Linear Regression and Gauss-Markov Assumptions}
-\begin{frame}{Key Concepts}
+
+\begin{frame}{Key Concepts: Gauss-Markov Assumptions}
 \begin{itemize}
-    \item \textbf{Linear Regression:} Predicts a dependent variable from independent variable(s).
-    \item \textbf{Gauss-Markov Assumptions:}
-    \begin{itemize}
-        \item \textbf{Linearity:} Relationship between predictors and outcome is linear.
-        \item \textbf{Independence:} Residuals (errors) are independent of each other.
-        \item \textbf{Homoscedasticity:} Residuals have constant variance.
-        \item \textbf{No Multicollinearity:} Independent variables are not highly correlated.
-        \item \textbf{Normality of Errors:} Errors are normally distributed (optional).
-    \end{itemize}
-    \item \textbf{Implications of Violations:} Leads to biased estimates, inefficient predictions, or unreliable inference.
+    \item \textbf{Linearity:} The relationship between predictors and the outcome is linear.
+    \item \textbf{Independence:} Residuals are independent.
+    \item \textbf{Homoscedasticity:} Residual variance is constant across all levels of the predictor(s).
+    \item \textbf{No Multicollinearity:} Predictors are not highly correlated (for multivariate regression).
+    \item \textbf{Normality of Errors:} Residuals are normally distributed (optional for unbiased estimation).
 \end{itemize}
 \end{frame}
 
 \begin{frame}{Example: Predicting Housing Prices}
 \begin{itemize}
-    \item \textbf{Dataset:} House prices based on square footage.
-    \item \textbf{Goals:}
+    \item \textbf{Dataset:} House prices based on features such as square footage.
+    \item \textbf{Tasks:}
     \begin{itemize}
-        \item Build regression model to predict house prices.
-        \item Evaluate Gauss-Markov assumptions (e.g., residual analysis).
-        \item Interpret coefficients and assess model validity.
+        \item Build a linear regression model to predict house prices based on square footage.
+        \item Assess the validity of the Gauss-Markov assumptions using residual plots.
+        \item Discuss implications of any assumption violations.
     \end{itemize}
 \end{itemize}
 \end{frame}
 
 \section{Conclusion}
+
 \begin{frame}{Summary}
 \begin{itemize}
-    \item Reviewed key concepts in data analysis and machine learning:
+    \item Reviewed essential concepts in data analysis and machine learning:
     \begin{itemize}
-        \item Descriptive statistics: Summarized data distributions.
-        \item Probability: Explored theoretical and simulated outcomes.
-        \item Regression: Built predictive models and evaluated their performance.
-        \item Hypothesis testing: Assessed differences using statistical tests.
-        \item Linear regression assumptions: Ensured model reliability.
+        \item Descriptive statistics and visualization to summarize and understand data.
+        \item Probability and simulation to estimate theoretical and practical outcomes.
+        \item Regression analysis to model relationships and make predictions.
+        \item Hypothesis testing to assess differences and validate assumptions.
+        \item Linear regression assumptions to ensure model reliability.
     \end{itemize}
-    \item Emphasized critical thinking and interpretation of results.
+    \item Emphasized critical thinking and interpretation of results for data-driven decisions.
 \end{itemize}
 \end{frame}
+
+
 
 \frame{\titlepage}
 

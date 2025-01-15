@@ -1,0 +1,7 @@
+\beamer@sectionintoc {1}{Introduction to \texttt {uv}}{2}{0}{1}
+\beamer@sectionintoc {2}{Descriptive Statistics and Data Visualization}{3}{0}{2}
+\beamer@sectionintoc {3}{Probability Theory and Simulation}{9}{0}{3}
+\beamer@sectionintoc {4}{Correlation and Regression Analysis}{13}{0}{4}
+\beamer@sectionintoc {5}{A/B Testing and Hypothesis Testing}{16}{0}{5}
+\beamer@sectionintoc {6}{Linear Regression and Gauss-Markov Assumptions}{18}{0}{6}
+\beamer@sectionintoc {7}{Conclusion}{20}{0}{7}
