@@ -1,0 +1,410 @@
+\documentclass{beamer}
+
+\usepackage{amsmath}
+\usepackage{graphicx}
+\usepackage{hyperref}
+\usepackage{listings}
+\usepackage{color}
+
+\title{Lecture: Introduction to Machine Learning}
+\author{KTH AI Student}
+\date{\today}
+
+\begin{document}
+
+\frame{\titlepage}
+
+\section{Introduction to Machine Learning}
+
+\begin{frame}{Introduction}
+\begin{itemize}
+    \item Machine Learning is a core aspect of modern AI.
+    \item Famous for its ability to learn and improve from data without explicit programming.
+    \item Goals of this section:
+    \begin{itemize}
+        \item Understand the basics of Machine Learning.
+        \item Explore its types and applications.
+    \end{itemize}
+\end{itemize}
+\end{frame}
+
+\begin{frame}{What is Machine Learning?}
+\begin{itemize}
+    \item \textbf{Definition:} Machine Learning (ML) is a subfield of Artificial Intelligence (AI) that enables systems to learn and improve from experience.
+    \item \textbf{Core Idea:} Use data to make predictions or decisions.
+    \item \textbf{Applications:}
+    \begin{itemize}
+        \item Predicting house prices.
+        \item Detecting spam emails.
+        \item Recommending products.
+    \end{itemize}
+\end{itemize}
+\end{frame}
+
+\begin{frame}{Types of Machine Learning - Overview}
+\begin{itemize}
+    \item Three main types of Machine Learning:
+    \begin{itemize}
+        \item Supervised Learning.
+        \item Unsupervised Learning.
+        \item Reinforcement Learning.
+    \end{itemize}
+\end{itemize}
+\end{frame}
+
+\begin{frame}{Supervised Learning}
+\begin{itemize}
+    \item Learns from labeled data.
+    \item Examples:
+    \begin{itemize}
+        \item Classification: Predicting if an email is spam or not.
+        \item Regression: Predicting house prices.
+    \end{itemize}
+    \item Key formula: $y = f(X)$, where $X$ are inputs, and $y$ are outputs.
+\end{itemize}
+\end{frame}
+
+\begin{frame}{Unsupervised Learning}
+\begin{itemize}
+    \item Learns from unlabeled data.
+    \item Example: Grouping customers based on purchasing behavior.
+    \item Focuses on finding patterns and structures in data.
+\end{itemize}
+\end{frame}
+
+\begin{frame}{Reinforcement Learning}
+\begin{itemize}
+    \item Learns by interacting with the environment.
+    \item Receives rewards for correct actions and penalties for incorrect ones.
+    \item Example: Teaching a robot to walk.
+\end{itemize}
+\end{frame}
+
+\section{Task 1: Data Preprocessing}
+
+\begin{frame}{Data Preprocessing Overview}
+\begin{itemize}
+    \item Essential step before training ML models.
+    \item Tasks:
+    \begin{itemize}
+        \item Load and clean data.
+        \item Handle missing values and categorical variables.
+        \item Normalize and split data into training and test sets.
+    \end{itemize}
+    \item Example Dataset: Heart Disease dataset.
+\end{itemize}
+\end{frame}
+
+\begin{frame}{Steps in Data Preprocessing (Part 1)}
+\begin{itemize}
+    \item \textbf{Loading Data:} Use pandas to load datasets.
+    \item \textbf{Handling Missing Values:} Remove or fill missing entries.
+\end{itemize}
+\begin{lstlisting}[language=Python, caption=Loading Data with Pandas]
+import pandas as pd
+
+\# Load dataset
+data = pd.read_csv('heart_disease.csv')
+
+\# Display first few rows
+print(data.head())
+\end{lstlisting}
+\end{frame}
+
+\begin{frame}{Steps in Data Preprocessing (Part 2)}
+\begin{itemize}
+    \item \textbf{Encoding Categorical Variables:} Convert categories to numerical values.
+    \item \textbf{Splitting Data:} Divide into training and test sets.
+\end{itemize}
+\begin{lstlisting}[language=Python, caption=Encoding and Splitting Data]
+from sklearn.model_selection import train_test_split
+from sklearn.preprocessing import LabelEncoder
+
+\# Encode categorical variables
+label_encoder = LabelEncoder()
+data['category'] = label_encoder.fit_transform(data['category'])
+
+\# Split data
+X = data.drop('target', axis=1)
+y = data['target']
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
+\end{lstlisting}
+\end{frame}
+
+\begin{frame}{Advanced Preprocessing}
+\begin{itemize}
+    \item Normalize the data to improve model performance.
+    \item Feature Engineering:
+    \begin{itemize}
+        \item Create new features by combining existing ones.
+        \item Example: Derive BMI from weight and height.
+    \end{itemize}
+\end{itemize}
+\begin{lstlisting}[language=Python, caption=Normalization and Feature Engineering]
+from sklearn.preprocessing import StandardScaler
+
+\# Normalize data
+scaler = StandardScaler()
+X_train = scaler.fit_transform(X_train)
+X_test = scaler.transform(X_test)
+
+\# Feature engineering example
+data['BMI'] = data['weight'] / (data['height'] / 100) ** 2
+\end{lstlisting}
+\end{frame}
+
+\section{Task 2: Training a Classification Model}
+
+\begin{frame}{Training a Simple Model: Perceptron}
+\begin{itemize}
+    \item \textbf{Perceptron:} Basic classification model.
+    \item \textbf{Key Steps:}
+    \begin{itemize}
+        \item Initialize model parameters.
+        \item Train model by updating weights.
+        \item Evaluate model accuracy on test data.
+    \end{itemize}
+\end{itemize}
+\begin{lstlisting}[language=Python, caption=Training a Perceptron Model]
+from sklearn.linear_model import Perceptron
+from sklearn.metrics import accuracy_score
+
+\# Initialize and train model
+model = Perceptron()
+model.fit(X_train, y_train)
+
+\# Predict and evaluate
+y_pred = model.predict(X_test)
+accuracy = accuracy_score(y_test, y_pred)
+print(f'Accuracy: {accuracy}')
+\end{lstlisting}
+\end{frame}
+
+\begin{frame}{Perceptron Visualization}
+\begin{itemize}
+    \item Example of decision boundary plot.
+    \item Helps in understanding how the model separates classes.
+\end{itemize}
+\begin{figure}
+    \centering
+    \includegraphics[width=0.8\linewidth]{perceptron_decision_boundary.png}
+    \caption{Decision Boundary of Perceptron Model}
+\end{figure}
+\end{frame}
+
+\begin{frame}{Advanced Classification Models (Part 1)}
+\begin{itemize}
+    \item Test various models using scikit-learn:
+    \begin{itemize}
+        \item Logistic Regression.
+        \item Support Vector Machines.
+    \end{itemize}
+\end{itemize}
+\begin{lstlisting}[language=Python, caption=Training Logistic Regression and SVM]
+from sklearn.linear_model import LogisticRegression
+from sklearn.svm import SVC
+
+\# Logistic Regression
+log_reg = LogisticRegression()
+log_reg.fit(X_train, y_train)
+log_reg_pred = log_reg.predict(X_test)
+
+\# Support Vector Machine
+svm = SVC()
+svm.fit(X_train, y_train)
+svm_pred = svm.predict(X_test)
+\end{lstlisting}
+\end{frame}
+
+\begin{frame}{Advanced Classification Models (Part 2)}
+\begin{itemize}
+    \item Test more advanced models:
+    \begin{itemize}
+        \item Decision Trees.
+        \item Random Forests.
+    \end{itemize}
+\end{itemize}
+\begin{lstlisting}[language=Python, caption=Training Decision Trees and Random Forests]
+from sklearn.tree import DecisionTreeClassifier
+from sklearn.ensemble import RandomForestClassifier
+
+\# Decision Tree
+tree = DecisionTreeClassifier()
+tree.fit(X_train, y_train)
+tree_pred = tree.predict(X_test)
+
+\# Random Forest
+forest = RandomForestClassifier()
+forest.fit(X_train, y_train)
+forest_pred = forest.predict(X_test)
+\end{lstlisting}
+\end{frame}
+
+\begin{frame}{Evaluation Metrics for Classification}
+\begin{itemize}
+    \item Metrics to evaluate model performance:
+    \begin{itemize}
+        \item Accuracy.
+        \item Precision.
+        \item Recall.
+        \item F1-score.
+    \end{itemize}
+\end{itemize}
+\begin{lstlisting}[language=Python, caption=Calculating Evaluation Metrics]
+from sklearn.metrics import precision_score, recall_score, f1_score
+
+\# Calculate metrics
+precision = precision_score(y_test, y_pred)
+recall = recall_score(y_test, y_pred)
+f1 = f1_score(y_test, y_pred)
+
+print(f'Precision: {precision}')
+print(f'Recall: {recall}')
+print(f'F1 Score: {f1}')
+\end{lstlisting}
+\end{frame}
+
+\section{Task 3: Best Practices and Hyperparameter Tuning}
+
+\begin{frame}{Model Evaluation Metrics}
+\begin{itemize}
+    \item \textbf{Accuracy:} Proportion of correct predictions.
+    \item \textbf{Precision:} Correct positive predictions out of total predicted positives.
+    \item \textbf{Recall:} Correct positive predictions out of actual positives.
+    \item \textbf{F1-Score:} Harmonic mean of precision and recall.
+    \item \textbf{ROC-AUC:} Area under the ROC curve.
+\end{itemize}
+\end{frame}
+
+\begin{frame}{Hyperparameter Tuning}
+\begin{itemize}
+    \item \textbf{Grid Search:} Explore combinations of parameters to find the best configuration.
+    \item \textbf{Cross-Validation:} Evaluate model on different data splits to ensure reliability.
+\end{itemize}
+\begin{lstlisting}[language=Python, caption=Hyperparameter Tuning with Grid Search]
+from sklearn.model_selection import GridSearchCV
+
+\# Define parameter grid
+param_grid = {
+    'C': [0.1, 1, 10],
+    'kernel': ['linear', 'rbf']
+}
+
+\# Initialize Grid Search
+grid_search = GridSearchCV(SVC(), param_grid, cv=5)
+grid_search.fit(X_train, y_train)
+
+\# Best parameters
+print(f'Best Parameters: {grid_search.best_params_}')
+\end{lstlisting}
+\end{frame}
+
+\section{Task 4: Regression Models}
+
+\begin{frame}{Overview of Regression Models}
+\begin{itemize}
+    \item Examples of models:
+    \begin{itemize}
+        \item Linear Regression.
+        \item Support Vector Machines for Regression.
+        \item Decision Trees.
+        \item Random Forests.
+    \end{itemize}
+\end{itemize}
+\end{frame}
+
+\begin{frame}{Evaluating Regression Models}
+\begin{itemize}
+    \item Metrics to assess model performance:
+    \begin{itemize}
+        \item Mean Squared Error (MSE).
+        \item Coefficient of Determination ($R^2$).
+    \end{itemize}
+\end{itemize}
+\begin{lstlisting}[language=Python, caption=Evaluating Regression Models]
+from sklearn.metrics import mean_squared_error, r2_score
+
+\# Calculate metrics
+mse = mean_squared_error(y_test, y_pred)
+r2 = r2_score(y_test, y_pred)
+
+print(f'Mean Squared Error: {mse}')
+print(f'R^2 Score: {r2}')
+\end{lstlisting}
+\end{frame}
+
+\begin{frame}{Visualizing Regression Results}
+\begin{itemize}
+    \item Compare predicted values against true values.
+    \item Use scatter plots for analysis.
+\end{itemize}
+\begin{figure}
+    \centering
+    \includegraphics[width=0.8\linewidth]{regression_results.png}
+    \caption{Regression Results Visualization}
+\end{figure}
+\end{frame}
+
+\section{Task 5: Clustering}
+
+\begin{frame}{Introduction to Clustering}
+\begin{itemize}
+    \item \textbf{Definition:} Group similar data points based on features.
+    \item \textbf{Applications:}
+    \begin{itemize}
+        \item Customer segmentation.
+        \item Image segmentation.
+    \end{itemize}
+\end{itemize}
+\end{frame}
+
+\begin{frame}{Examples of Clustering Algorithms}
+\begin{itemize}
+    \item Common algorithms:
+    \begin{itemize}
+        \item K-Means.
+        \item DBSCAN.
+        \item Agglomerative Clustering.
+        \item Gaussian Mixture Models.
+    \end{itemize}
+\end{itemize}
+\begin{lstlisting}[language=Python, caption=Clustering with K-Means]
+from sklearn.cluster import KMeans
+
+\# Initialize and fit K-Means
+kmeans = KMeans(n_clusters=3)
+kmeans.fit(X)
+
+\# Predict clusters
+clusters = kmeans.predict(X)
+\end{lstlisting}
+\end{frame}
+
+\begin{frame}{Visualizing Clusters}
+\begin{itemize}
+    \item Plot clusters using scatter plots with different colors.
+    \item Analyze cluster characteristics and separability.
+\end{itemize}
+\begin{figure>
+    \centering
+    \includegraphics[width=0.8\linewidth]{clusters.png}
+    \caption{Cluster Visualization}
+\end{figure>
+\end{frame}
+
+\section{Conclusion}
+
+\begin{frame}{Summary}
+\begin{itemize}
+    \item Recap of all tasks and key concepts:
+    \begin{itemize}
+        \item Introduction to Machine Learning.
+        \item Data preprocessing steps.
+        \item Training and evaluating classification and regression models.
+        \item Clustering and its applications.
+    \end{itemize}
+    \item Importance of proper evaluation and tuning in ML pipelines.
+\end{itemize}
+\end{frame}
+
+\end{document}
