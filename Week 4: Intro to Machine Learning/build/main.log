@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.26 (TeX Live 2024) (preloaded format=pdflatex 2024.12.17)  15 JAN 2025 09:29
+This is pdfTeX, Version 3.141592653-2.6-1.40.26 (TeX Live 2024) (preloaded format=pdflatex 2024.12.17)  15 JAN 2025 09:39
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -562,8 +562,7 @@ Package: listings 2024/02/21 1.10 (Carsten Heinz)
 File: l3backend-pdftex.def 2024-02-20 L3 backend support: PDF output (pdfTeX)
 \l__color_backend_stack_int=\count345
 \l__pdf_internal_box=\box78
-)
-No file main.aux.
+) (build/main.aux)
 \openout1 = `main.aux'.
 
 LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 13.
@@ -584,6 +583,7 @@ LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 13.
 LaTeX Font Info:    ... okay on input line 13.
 LaTeX Font Info:    Checking defaults for PU/pdf/m/n on input line 13.
 LaTeX Font Info:    ... okay on input line 13.
+
 *geometry* driver: auto-detecting
 *geometry* detected driver: pdftex
 *geometry* verbose mode - [ preamble ] result:
@@ -968,10 +968,10 @@ you left one out. Proceed, with fingers crossed.
 [12
 
 ]
-<perceptron_decision_boundary.png.png, id=331, 462.528pt x 346.896pt>
-File: perceptron_decision_boundary.png.png Graphic file (type png)
-<use perceptron_decision_boundary.png.png>
-Package pdftex.def Info: perceptron_decision_boundary.png.png  used on input line 193.
+<perceptron_decision_boundary.png, id=331, 462.528pt x 346.896pt>
+File: perceptron_decision_boundary.png Graphic file (type png)
+<use perceptron_decision_boundary.png>
+Package pdftex.def Info: perceptron_decision_boundary.png  used on input line 193.
 (pdftex.def)             Requested size: 245.83282pt x 184.37802pt.
 
 Overfull \vbox (6.97853pt too high) detected at line 193
@@ -979,7 +979,7 @@ Overfull \vbox (6.97853pt too high) detected at line 193
 
 [13
 
- <./perceptron_decision_boundary.png.png>]
+ <./perceptron_decision_boundary.png>]
 Runaway argument?
 /Users/martinbravodiaz/AIStudent/Week 4: Intro to Machine Learning/main.tex:217: Paragraph ended before \lst@next was complete.
 <to be read again> 
@@ -1334,10 +1334,10 @@ you'd better type `E' or `X' now and fix your file.
 
  
 Here is how much of TeX's memory you used:
- 23265 strings out of 474116
- 436925 string characters out of 5743681
+ 23264 strings out of 474116
+ 436786 string characters out of 5743681
  1937187 words of memory out of 5000000
- 45129 multiletter control sequences out of 15000+600000
+ 45126 multiletter control sequences out of 15000+600000
  568907 words of font info for 75 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
  128i,14n,123p,448b,1315s stack positions out of 10000i,1000n,20000p,200000b,200000s

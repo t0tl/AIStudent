@@ -1,5 +1,5 @@
 # Fdb version 4
-["pdflatex"] 1736929757.9983 "/Users/martinbravodiaz/AIStudent/Week 4: Intro to Machine Learning/main.tex" "build/main.pdf" "main" 1736929761.36754 2
+["pdflatex"] 1736930397.68334 "/Users/martinbravodiaz/AIStudent/Week 4: Intro to Machine Learning/main.tex" "build/main.pdf" "main" 1736930403.51447 2
   "/Users/martinbravodiaz/AIStudent/Week 4: Intro to Machine Learning/main.tex" 1736929753.38092 11970 174ddd60aab1c15576122bafcbeb1767 ""
   "/usr/local/texlive/2024/texmf-dist/fonts/map/fontname/texfonts.map" 1577235249 3524 cb3e574dea2d1052e39280babc910dc8 ""
   "/usr/local/texlive/2024/texmf-dist/fonts/tfm/public/amsfonts/cmextra/cmex7.tfm" 1246382020 1004 54797486969f23fa377b128694d548df ""
@@ -191,11 +191,10 @@
   "/usr/local/texlive/2024/texmf-var/fonts/map/pdftex/updmap/pdftex.map" 1734464711.32709 5467645 128b85b7cde5f5edc5cb7f1dd7ff8736 ""
   "/usr/local/texlive/2024/texmf-var/web2c/pdftex/pdflatex.fmt" 1734464412 8221433 c1ff7bf1943d02311d6f8fecaff2110b ""
   "/usr/local/texlive/2024/texmf.cnf" 1710266656 577 e590dabc9e28c5b61546e15f63eebcdf ""
-  "build/main.aux" 1736929761.22847 5306 95fac522eca39b4b687737aa3b35c10e "pdflatex"
+  "build/main.aux" 1736930403.26024 5306 95fac522eca39b4b687737aa3b35c10e "pdflatex"
   "build/main.nav" 1736929357.96634 3833 e5bc92fc27698f3d6955d35e6b5dec87 ""
-  "main.aux" 0 -1 0 ""
   "main.tex" 1736929753.38092 11970 174ddd60aab1c15576122bafcbeb1767 ""
-  "perceptron_decision_boundary.png.png" 1736929192.45265 39525 642e6cba774016317ca10bddc297a5d0 ""
+  "perceptron_decision_boundary.png" 1736929192.45265 39525 642e6cba774016317ca10bddc297a5d0 ""
   "regression_results.png" 1736929192.46611 17437 f5a88a297817c5c69ebf245aed183b0e ""
   (generated)
   "build/main.aux"
