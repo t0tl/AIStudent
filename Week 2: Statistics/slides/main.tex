@@ -1,7 +1,15 @@
 \documentclass{beamer}
 \usepackage{amsmath}
-\usepackage{graphicx}
 \usepackage{hyperref}
+\usepackage{graphicx}
+\usepackage{tikz}
+\addtobeamertemplate{frametitle}{}{%
+    \begin{tikzpicture}[remember picture,overlay]
+        \node[anchor=north east, xshift=-0.5cm, yshift=-0.1cm] at (current page.north east) {
+            \includegraphics[width=1.5cm]{imgs/kth-logo.png}
+        };
+    \end{tikzpicture}
+}
 
 \title{Lecture: Data Analysis and Machine Learning Theory}
 \author{KTH AI Student}
@@ -11,23 +19,38 @@
 
 \frame{\titlepage}
 
-\section{Introduction to \texttt{uv}}
-\begin{frame}{Installing Required Packages with \texttt{uv}}
+\section{About me}
+\begin{frame}{About me}
 \begin{itemize}
-    \item \texttt{uv}: Modern tool for managing virtual environments.
-    \item Features:
-    \begin{itemize}
-        \item Inline dependency management: Specify dependencies directly in your code for better reproducibility.
-        \item Faster installations: Uses efficient caching to minimize installation time.
-        \item Lockfiles: Ensures consistent environments across systems by locking dependency versions.
-    \end{itemize}
-    \item Installation: \texttt{pip install uv}
-    \item Usage: \texttt{uv run <name\_of\_file.py>}, automatically handles dependencies.
+    \item Jag heter Martín! I am from Chile, did my Bachelor's Degree at Universidad de Chile, doing a year-long exchange at KTH.
+    \item I am currently interning at Hopsworks, an AI Lakehouse in Stockholm. Working on ML pipelines and LLMs.
+    \item I enjoy running, hiking, and trying to improve my awful Swedish.
 \end{itemize}
+\begin{figure}
+    \centering
+    \includegraphics[width=4cm]{imgs/me.jpeg}
+    \includegraphics[width=5cm]{imgs/empire.png}
+\end{figure}
 \end{frame}
+
+\begin{frame}{In this lecture}
+    \begin{itemize}
+        \item We will review key concepts in data analysis and machine learning theory.
+        \begin{itemize}
+            \item Descriptive Statistics and Data Visualization.
+            \item Probability Theory and Simulation.
+            \item Correlation and Regression Analysis.
+            \item A/B Testing and Hypothesis Testing.
+        \end{itemize}
+    \end{itemize}
+    \end{frame}
+    
 
 \section{Descriptive Statistics and Data Visualization}
 
+\begin{frame}{Question 1}
+    Imagine we have a big dataset, and we want to summarize it. What are some ways we can do this?
+    \end{frame}
 \begin{frame}{Example: Student Test Scores}
     \begin{itemize}
         \item \textbf{Dataset:} Contains scores of students.
@@ -63,14 +86,6 @@
 \end{itemize}
 \end{frame}
 
-\begin{frame}{Key Concepts}
-\begin{itemize}
-    \item \textbf{Skewness}: Measures asymmetry of data distribution.
-    $$ \text{Skewness} = \frac{\frac{1}{n} \sum_{i=1}^{n} (x_i - \bar{x})^3}{\left(\frac{1}{n} \sum_{i=1}^{n} (x_i - \bar{x})^2\right)^{3/2}} $$
-    \item \textbf{Kurtosis}: Measures the \textit{tailedness} of the data distribution.
-    $$ \text{Kurtosis} = \frac{\frac{1}{n} \sum_{i=1}^{n} (x_i - \bar{x})^4}{\left(\frac{1}{n} \sum_{i=1}^{n} (x_i - \bar{x})^2\right)^2} $$
-\end{itemize}
-\end{frame}
 
 \begin{frame}{Key Concepts}
 \textbf{Data Visualization:} Graphical representation of data.
@@ -78,12 +93,12 @@
     \item \textbf{Histograms}: Show frequency distribution of data.
         \begin{figure}
             \centering
-            \includegraphics[width=0.5\textwidth]{histogram.png}
+            \includegraphics[width=0.5\textwidth]{imgs/histogram.png}
         \end{figure}
     \item \textbf{Box Plots}: Visualize data spread and identify outliers.
         \begin{figure}
             \centering
-            \includegraphics[width=0.5\textwidth]{box-plot.png}
+            \includegraphics[width=0.5\textwidth]{imgs/box-plot.png}
         \end{figure}
     \end{itemize}
 \end{frame}
@@ -93,18 +108,22 @@
     \item \textbf{Scatter Plots}: Display relationships between two variables.
     \begin{figure}
         \centering
-        \includegraphics[width=0.5\textwidth]{scatter-plot.png}
+        \includegraphics[width=0.5\textwidth]{imgs/scatter-plot.png}
     \end{figure}
     \item \textbf{Bar Charts}: Compare categorical data.
     \begin{figure}
         \centering
-        \includegraphics[width=0.3\textwidth]{bar-chart.png}
+        \includegraphics[width=0.3\textwidth]{imgs/bar-chart.png}
     \end{figure}
 \end{itemize}
 \end{frame}
 
 
 \section{Probability Theory and Simulation}
+
+\begin{frame}{Question 2}
+    We have a dataset, but does this dataset represent the real world? How can we estimate the probability of events?
+\end{frame}
 
 
 \begin{frame}{Example: Simulation Tasks}
@@ -156,7 +175,26 @@
     \end{itemize}
 \end{itemize}
 \end{frame}
+
+
 \section{Correlation and Regression Analysis}
+
+\begin{frame}{Question 3}
+    We have two variables, how can we determine if they are related? How can we predict one variable based on the other?
+\end{frame}
+
+\begin{frame}{Example: Car Prices and Mileage}
+    \begin{itemize}
+        \item \textbf{Dataset:} Contains car prices and mileage.
+        \item \textbf{Tasks:}
+        \begin{itemize}
+            \item Compute the correlation coefficient to assess the strength and direction of the relationship.
+            \item Build a simple linear regression model to predict prices based on mileage.
+            \item Visualize the data and regression line to interpret the results.
+        \end{itemize}
+    \end{itemize}
+\end{frame}
+    
 
 \begin{frame}{Key Concepts: Correlation}
 \begin{itemize}
@@ -173,6 +211,19 @@
 \end{itemize}
 \end{frame}
 
+\begin{frame}{Key Concepts: Correlation}
+\begin{itemize}
+    \item \textbf{Correlation Coefficient:} Denoted by $r$.
+    $$ r = \frac{\sum_{i=1}^{n} (x_i - \bar{x})(y_i - \bar{y})}{\sqrt{\sum_{i=1}^{n} (x_i - \bar{x})^2} \sqrt{\sum_{i=1}^{n} (y_i - \bar{y})^2}} $$
+    \item \textbf{Correlation Matrix:} Displays pairwise correlations between variables.
+\end{itemize}
+\begin{figure}
+    \centering
+    \includegraphics[width=0.5\textwidth]{imgs/correlation.png}
+\end{figure}
+\end{frame}
+
+
 \begin{frame}{Key Concepts: Regression Analysis}
 \begin{itemize}
     \item \textbf{Regression Analysis:} Models the relationship between a dependent variable and one or more independent variables.
@@ -186,23 +237,34 @@
         \item \textbf{Evaluation Metrics:} Assess model fit using metrics such as Mean Squared Error (MSE).
     \end{itemize}
 \end{itemize}
+\begin{figure}
+    \centering
+    \includegraphics[width=0.5\textwidth]{imgs/regression.png}
+\end{figure}
 \end{frame}
 
-\begin{frame}{Example: Car Prices and Mileage}
-\begin{itemize}
-    \item \textbf{Dataset:} Contains car prices and mileage.
-    \item \textbf{Tasks:}
-    \begin{itemize}
-        \item Compute the correlation coefficient to assess the strength and direction of the relationship.
-        \item Build a simple linear regression model to predict prices based on mileage.
-        \item Visualize the data and regression line to interpret the results.
-    \end{itemize}
-\end{itemize}
-\end{frame}
 
 \section{A/B Testing and Hypothesis Testing}
 
+\begin{frame}{Question 4}
+    We have two groups, how can we determine if they are significantly different? How can we validate our assumptions?
+\end{frame}
+
+
+\begin{frame}{Example: Website Redesign A/B Test}
+    \begin{itemize}
+        \item \textbf{Dataset:} User engagement metrics for old and new designs.
+        \item \textbf{Tasks:}
+        \begin{itemize}
+            \item Perform a t-test to compare engagement levels.
+            \item Calculate and interpret the p-value.
+            \item Determine whether the new design significantly improves engagement.
+        \end{itemize}
+    \end{itemize}
+    \end{frame}
+
 \begin{frame}{Key Concepts: Hypothesis Testing}
+
 \begin{itemize}
     \item \textbf{Hypothesis Testing:} Framework to evaluate whether observed data provides sufficient evidence to reject a null hypothesis ($H_0$).
     \begin{itemize}
@@ -218,40 +280,31 @@
 \end{itemize}
 \end{frame}
 
-\begin{frame}{Example: Website Redesign A/B Test}
+\begin{frame}{Key Concepts: Hypothesis Testing}
 \begin{itemize}
-    \item \textbf{Dataset:} User engagement metrics for old and new designs.
-    \item \textbf{Tasks:}
+    \item \textbf{Interpretation:}
     \begin{itemize}
-        \item Perform a t-test to compare engagement levels.
-        \item Calculate and interpret the p-value.
-        \item Determine whether the new design significantly improves engagement.
+        \item \textbf{p-value $< \alpha$:} Reject $H_0$, evidence supports $H_a$.
+        \item \textbf{p-value $\geq \alpha$:} Fail to reject $H_0$, insufficient evidence.
     \end{itemize}
+    \item \textbf{Type I Error:} Incorrectly reject $H_0$ (false positive).
+    \item \textbf{Type II Error:} Incorrectly fail to reject $H_0$ (false negative).
+    \item \textbf{Power:} Probability of correctly rejecting $H_0$.
 \end{itemize}
 \end{frame}
 
-\section{Linear Regression and Gauss-Markov Assumptions}
-
-\begin{frame}{Key Concepts: Gauss-Markov Assumptions}
-\begin{itemize}
-    \item \textbf{Linearity:} The relationship between predictors and the outcome is linear.
-    \item \textbf{Independence:} Residuals are independent.
-    \item \textbf{Homoscedasticity:} Residual variance is constant across all levels of the predictor(s).
-    \item \textbf{No Multicollinearity:} Predictors are not highly correlated (for multivariate regression).
-    \item \textbf{Normality of Errors:} Residuals are normally distributed (optional for unbiased estimation).
-\end{itemize}
-\end{frame}
-
-\begin{frame}{Example: Predicting Housing Prices}
-\begin{itemize}
-    \item \textbf{Dataset:} House prices based on features such as square footage.
-    \item \textbf{Tasks:}
-    \begin{itemize}
-        \item Build a linear regression model to predict house prices based on square footage.
-        \item Assess the validity of the Gauss-Markov assumptions using residual plots.
-        \item Discuss implications of any assumption violations.
-    \end{itemize}
-\end{itemize}
+\begin{frame}{Key Concepts: Hypothesis Testing}
+How to perform a t-test:
+\begin{enumerate}
+    \item Define null and alternative hypotheses.
+    \item Choose a significance level $\alpha$.
+    \item Calculate the t-statistic.
+    $$ t = \frac{\bar{x}_1 - \bar{x}_2}{\sqrt{\frac{s_1^2}{n_1} + \frac{s_2^2}{n_2}}} $$
+    \item Calculate the degrees of freedom.
+    $$ \text{df} = \frac{(s_1^2/n_1 + s_2^2/n_2)^2}{\frac{(s_1^2/n_1)^2}{n_1 - 1} + \frac{(s_2^2/n_2)^2}{n_2 - 1}} $$
+    \item Calculate the p-value.
+    \item Make a decision based on the p-value.
+\end{enumerate}
 \end{frame}
 
 \section{Conclusion}
@@ -264,7 +317,6 @@
         \item Probability and simulation to estimate theoretical and practical outcomes.
         \item Regression analysis to model relationships and make predictions.
         \item Hypothesis testing to assess differences and validate assumptions.
-        \item Linear regression assumptions to ensure model reliability.
     \end{itemize}
     \item Emphasized critical thinking and interpretation of results for data-driven decisions.
 \end{itemize}
